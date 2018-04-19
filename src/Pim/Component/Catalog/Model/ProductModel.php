@@ -74,6 +74,7 @@ class ProductModel implements ProductModelInterface
         $this->categories = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->productModels = new ArrayCollection();
+        $this->associations = new ArrayCollection();
     }
 
     /**
