@@ -159,10 +159,9 @@ acceptance:
                 - test.catalog_volume_limits.product_model_context
                 - test.catalog_volume_limits.product_value_context
             filters:
-                tags: '@acceptance'
+                tags: '@acceptance-back'
 
     extensions:
-        Liuggio\Fastest\Behat\ListFeaturesExtension\Extension: ~
         FriendsOfBehat\ContextServiceExtension:
            imports:
                - "tests/back/Acceptance/Resources/config/behat/services.yml"
