@@ -638,7 +638,7 @@ class ProductModel implements ProductModelInterface
             if (null !== $associationType && null !== $this->getAssociationForType($associationType)) {
                 throw new \LogicException(
                     sprintf(
-                        'Can not add an association of type %s because the product already has one',
+                        'Cannot add an association of type %s because the product model already has one',
                         $associationType->getCode()
                     )
                 );
