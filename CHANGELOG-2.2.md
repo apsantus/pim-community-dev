@@ -3,6 +3,7 @@
 ## Bug fixes
 
 - PIM-7281: Fix inappropriate calls to the cache clearer
+- PIM-7305: Fix memory leak on purge job command
 
 # 2.2.3 (2018-04-12)
 
