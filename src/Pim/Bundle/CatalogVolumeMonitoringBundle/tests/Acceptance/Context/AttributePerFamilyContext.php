@@ -14,9 +14,6 @@ use Webmozart\Assert\Assert;
 final class AttributePerFamilyContext implements Context, SnippetAcceptingContext
 {
     /** @var array */
-    private $limits = [];
-
-    /** @var array */
     private $familiesNumbers = [];
 
     /** @var array */
