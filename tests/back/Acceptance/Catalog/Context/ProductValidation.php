@@ -15,75 +15,46 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Akeneo\Test\Common\Structure\Attribute;
 
 /**
+ * Use this context to check product value validation rules. Create a product with specific values, valid the product
+ * object and check errors.
+ *
  * @author    Samir Boulil <samir.boulil@akeneo.com>
  * @copyright 2018 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-final class ProductValue implements Context
+final class ProductValidation implements Context
 {
-    private const IDENTIFIER_ATTRIBUTE = 'sku';
-
     /** @var ProductInterface */
     private $updatedProduct;
 
     /** @var Builder\Product */
     private $productBuilder;
 
-    /** @var SaverInterface */
-    private $attributeSaver;
-
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
     /** @var ValidatorInterface */
     private $productValidator;
 
-    /** @var Attribute\Builder */
-    private $attributeBuilder;
-
     public function __construct(
-        SaverInterface $attributeSaver,
         Builder\Product $productBuilder,
-        InMemoryProductRepository $productRepository,
-        ValidatorInterface $productValidator,
-        Attribute\Builder $attributeBuilder
+        ValidatorInterface $productValidator
     ) {
-        $this->attributeSaver = $attributeSaver;
         $this->productBuilder = $productBuilder;
-        $this->productRepository = $productRepository;
         $this->productValidator = $productValidator;
-        $this->attributeBuilder = $attributeBuilder;
     }
 
     /**
-     * @Given a product with an identifier :identifier
+     * @When another product is created with identifier :identifier
      */
-    public function aProductWithAnIdentifier(string $identifier): void
-    {
-        $attribute = $this->attributeBuilder->aIdentifier()
-            ->withCode(self::IDENTIFIER_ATTRIBUTE)
-            ->build();
-
-        $this->attributeSaver->save($attribute);
-
-        $product = $this->productBuilder->withIdentifier($identifier)->build();
-        $this->productRepository->save($product);
-    }
-
-    /**
-     * @When a product is created with identifier :identifier
-     */
-    public function aProductIsCreatedWithIdentifier($identifier): void
+    public function aProductIsCreatedWithIdentifier(string $identifier): void
     {
         $this->updatedProduct = $this->productBuilder->withIdentifier($identifier)->build(false);
     }
 
     /**
-     * @Then an error should be raised because of :errorMessage
+     * @Then the error :errorMessage is raised
      *
      * @throws \Exception
      */
-    public function anErrorShouldBeRaisedBecauseOf($errorMessage): void
+    public function anErrorShouldBeRaisedBecauseOf(string $errorMessage): void
     {
         $violations = $this->productValidator->validate($this->updatedProduct);
 
